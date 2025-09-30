@@ -16,7 +16,7 @@ This repository provides a comprehensive analysis and interactive dashboard of h
 
 ## 🖼️ Dashboard Preview
 
-![Dashboard Screenshot](KingCountyHouseSalesBoard.png)
+![King County House Sales Board Preview](King%20County%20House%20Sales%20Board%20.png)
 
 For a live, interactive view, access the dashboard here:  
 [King County House Sales Tableau Dashboard](https://public.tableau.com/app/profile/neelam.s.jat/viz/KingCountyHouseSales_17581165566070/KingCountyHouseSales)
