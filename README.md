@@ -4,16 +4,6 @@ This repository provides a comprehensive analysis and interactive dashboard of h
 
 ---
 
-## 📂 Project Files
-
-- **HouseData.xlsx**: Original raw dataset of King County house sales.
-- **King County House Sales.png**: Screenshot of the Tableau dashboard (quick overview).
-- **KingCountyHouseSales_Dashboard.twbx**: Tableau workbook file containing the interactive dashboard.
-- **LICENSE**: Project license (MIT).
-- **README.md**: This documentation.
-
----
-
 ## 🖼️ Dashboard Preview
 
 ![King County House Sales Board Preview](King%20County%20House%20Sales%20Board%20.png)
