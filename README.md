@@ -21,7 +21,7 @@ For a live, interactive view, access the dashboard here:
 2. **Data Preparation**
     - **SQL**: Clean, filter, and select relevant records across all available years, remove nulls, and aggregate key columns.
 
-    Example SQL script:
+SQL script:
     ```sql
     -- Select and clean data across all years, remove nulls
     SELECT id, date, price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront,
@@ -36,7 +36,7 @@ For a live, interactive view, access the dashboard here:
 
     - **Python**: Handle missing values, engineer new features (e.g., price per sqft), and remove outliers.
 
-    Example Python script:
+ Python script:
     ```python
     import pandas as pd
 
