@@ -1,4 +1,4 @@
-# King County House Sales Tableau Project (Multi-Year Analysis)
+# King County House Sales Tableau Project
 
 This repository provides a comprehensive analysis and interactive dashboard of house sales in King County, Washington, spanning multiple years. The project leverages SQL and Python for data cleaning and preprocessing, and Tableau for visualization. It is designed to deliver actionable insights to buyers, sellers, and real estate professionals.
 
@@ -16,7 +16,7 @@ This repository provides a comprehensive analysis and interactive dashboard of h
 
 ## 🖼️ Dashboard Preview
 
-![Dashboard Screenshot](King%20County%20House%20Sales.png)
+![Dashboard Screenshot](KingCountyHouseSalesBoard.png)
 
 For a live, interactive view, access the dashboard here:  
 [King County House Sales Tableau Dashboard](https://public.tableau.com/app/profile/neelam.s.jat/viz/KingCountyHouseSales_17581165566070/KingCountyHouseSales)
