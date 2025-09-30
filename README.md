@@ -1,6 +1,6 @@
-# King County House Sales Tableau Project
+# King County House Sales Tableau Project (Multi-Year Analysis)
 
-This repository provides a comprehensive analysis and interactive dashboard of house sales in King County, Washington, for July 2014. The project leverages SQL and Python for data cleaning and preprocessing, and Tableau for visualization. It is designed to deliver actionable insights to buyers, sellers, and real estate professionals.
+This repository provides a comprehensive analysis and interactive dashboard of house sales in King County, Washington, spanning multiple years. The project leverages SQL and Python for data cleaning and preprocessing, and Tableau for visualization. It is designed to deliver actionable insights to buyers, sellers, and real estate professionals.
 
 ---
 
@@ -29,21 +29,22 @@ For a live, interactive view, access the dashboard here:
     - Inspect the raw Excel data (`HouseData.xlsx`) to understand available features (price, bedrooms, bathrooms, sqft, year built, etc.).
 
 2. **Data Preparation**
-    - **SQL**: Filter, clean, and select relevant records for July 2014, remove nulls, and aggregate key columns.
-    - **Python**: Handle missing values, engineer new features (e.g., price per sqft), and remove outliers.
+    - **SQL**: Clean, filter, and select relevant records across all available years, remove nulls, and aggregate key columns.
 
     Example SQL script:
     ```sql
+    -- Select and clean data across all years, remove nulls
     SELECT id, date, price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront,
            view, condition, grade, yr_built, zipcode, lat, long
     FROM house_sales
-    WHERE date >= '2014-07-01' AND date < '2014-08-01'
-      AND price IS NOT NULL
+    WHERE price IS NOT NULL
       AND bedrooms IS NOT NULL
       AND bathrooms IS NOT NULL
       AND sqft_living IS NOT NULL
       AND zipcode IS NOT NULL;
     ```
+
+    - **Python**: Handle missing values, engineer new features (e.g., price per sqft), and remove outliers.
 
     Example Python script:
     ```python
@@ -62,37 +63,44 @@ For a live, interactive view, access the dashboard here:
 3. **Tableau Visualization**
     - Import the cleaned data into Tableau.
     - Build interactive visuals:
-        - Daily average house sales price
-        - Map of sales by region
-        - Distribution of house prices, bedrooms, bathrooms
-        - View vs condition heatmap
-        - Filters for month, year built, sqft living, and lot size
-
+        - Filter by month/year, living area, lot size.
+        - Daily average house sales price by selected month/year.
+        - Map of sales by region.
+        - Distribution of house prices, bedrooms, bathrooms.
+        - View vs condition heatmap with average prices.
+    
 4. **Review & Usage**
     - Refer to the screenshot (`King County House Sales.png`) for a quick overview.
     - Open the Tableau workbook (`KingCountyHouseSales_Dashboard.twbx`) for full interactivity.
 
 ---
 
-## 💡 Business Questions & Answers
+## 💼 Business Questions & Answers
 
-**1. What is the daily average house sale price in King County for July 2014?**
-   - The daily average price fluctuates around $500,000, showing a stable market during the month.
+**1. How do house sales and prices change across different months and years?**
+   - The dashboard allows users to filter by month and year. Average house prices fluctuate over time, with some months showing higher average prices, e.g., May 2014 peaked near $600,000.
 
-**2. How are house prices distributed?**
-   - Most houses are sold in the $200,000–$700,000 range, with fewer sales above $1 million.
+**2. What is the distribution of house prices in King County?**
+   - Most houses are sold in the $200,000–$700,000 range. High-priced sales ($1M+) are less frequent.
 
-**3. Which areas see the most house sales?**
-   - The Seattle metropolitan region shows higher sales activity, as seen on the map.
+**3. Which regions have the highest sales and prices?**
+   - The Seattle metropolitan area and north King County show higher sales activity and prices, as illustrated by the interactive map.
 
-**4. What are the most common property features?**
-   - Most homes have 3–4 bedrooms and 2–3 bathrooms; living area typically ranges from 1,000–3,000 sqft.
+**4. How do property features (bedrooms, bathrooms, living area) relate to sale price?**
+   - Most homes have 3–4 bedrooms, 2–3 bathrooms, and living areas between 1,000–3,000 sqft.
+   - More bedrooms and bathrooms generally correlate with higher prices, but outliers exist.
 
-**5. How do condition and view impact sales?**
-   - Houses with "No View" and average conditions are most common. "Good" or "Excellent" views are rare and likely command higher prices.
+**5. How do house condition and view affect sale prices?**
+   - The View vs Condition heatmap shows:
+     - Houses with "Very Good" conditions and "Excellent" views fetch the highest average prices (often above $1M).
+     - "No View" properties have lower average prices, regardless of condition.
+     - Condition upgrades add significant value, especially for houses with a view.
 
-**6. Are there seasonal or daily trends?**
-   - No drastic daily price changes in July 2014, indicating consistent buyer activity.
+**6. How does lot size and living area impact sales?**
+   - Larger living areas and lot sizes correspond to higher prices, but most sales fall within moderate ranges (living area < 3,000 sqft, lot < 10,000 sqft).
+
+**7. Are there seasonal or market trends visible in the data?**
+   - Yes, the dashboard’s time filter reveals that certain months (e.g., May, July) have higher average prices and sales volume, indicating possible seasonal effects.
 
 ---
 
