@@ -1,130 +1,116 @@
-# King County House Sales Analysis Dashboard
+# King County House Sales Tableau Project
 
-This project analyzes house sales in King County, Washington, using a combination of SQL, Python, and Tableau. It transforms raw public data into actionable insights for real estate stakeholders.
-
-## Project Overview
-
-- **Data Source:** [King County House Sales (Public Data)](https://www.kaggle.com/datasets/harlfoxem/housesalesprediction)
-- **Visualization:** [Interactive Tableau Dashboard](https://public.tableau.com/app/profile/neelam.s.jat/viz/KingCountyHouseSales_17581165566070/KingCountyHouseSales)
-- **Tech Stack:** SQL (data cleaning/filtering), Python (preprocessing), Tableau (visualization)
+This repository provides a comprehensive analysis and interactive dashboard of house sales in King County, Washington, for July 2014. The project leverages SQL and Python for data cleaning and preprocessing, and Tableau for visualization. It is designed to deliver actionable insights to buyers, sellers, and real estate professionals.
 
 ---
 
-## Business Questions Answered
+## 📂 Project Files
 
-1. **What is the daily average house sale price in King County for July 2014?**
-2. **How are house prices distributed across different price ranges?**
-3. **Which neighborhoods or regions are most active in house sales?**
-4. **How do property features (bedrooms, bathrooms, square footage) relate to sale price?**
-5. **What is the impact of house condition and view on sale price?**
-6. **What are the most common property characteristics (year built, lot size, etc.)?**
-7. **How can buyers and sellers identify typical home profiles and market trends?**
+- **HouseData.xlsx**: Original raw dataset of King County house sales.
+- **King County House Sales.png**: Screenshot of the Tableau dashboard (quick overview).
+- **KingCountyHouseSales_Dashboard.twbx**: Tableau workbook file containing the interactive dashboard.
+- **LICENSE**: Project license (MIT).
+- **README.md**: This documentation.
 
 ---
 
-## Project Flow
+## 🖼️ Dashboard Preview
 
-1. **Data Acquisition**
-   - Downloaded the public dataset from Kaggle.
-   - Verified source and integrity.
+![Dashboard Screenshot](King%20County%20House%20Sales.png)
 
-2. **Data Cleaning and Preparation**
-   - Used SQL to filter, join, and aggregate key columns.
-   - Employed Python for handling missing values and feature engineering.
-
-3. **Exploratory Data Analysis**
-   - Identified outliers and common ranges for price, bedrooms, bathrooms, lot size, and living area.
-
-4. **Dashboard Creation in Tableau**
-   - Built interactive visualizations for price distribution, sales trend, feature breakdowns, and spatial analysis.
-   - Published dashboard for public access.
+For a live, interactive view, access the dashboard here:  
+[King County House Sales Tableau Dashboard](https://public.tableau.com/app/profile/neelam.s.jat/viz/KingCountyHouseSales_17581165566070/KingCountyHouseSales)
 
 ---
 
-## SQL Scripts
+## 📊 Project Flow
 
-```sql name=king_county_clean.sql
--- Filter dataset to July 2014, remove nulls, and select key columns
-SELECT id, date, price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront,
-       view, condition, grade, yr_built, zipcode, lat, long
-FROM house_sales
-WHERE date >= '2014-07-01' AND date < '2014-08-01'
-  AND price IS NOT NULL
-  AND bedrooms IS NOT NULL
-  AND bathrooms IS NOT NULL
-  AND sqft_living IS NOT NULL
-  AND zipcode IS NOT NULL;
-```
+1. **Data Review**
+    - Inspect the raw Excel data (`HouseData.xlsx`) to understand available features (price, bedrooms, bathrooms, sqft, year built, etc.).
 
----
+2. **Data Preparation**
+    - **SQL**: Filter, clean, and select relevant records for July 2014, remove nulls, and aggregate key columns.
+    - **Python**: Handle missing values, engineer new features (e.g., price per sqft), and remove outliers.
 
-## Python Scripts
+    Example SQL script:
+    ```sql
+    SELECT id, date, price, bedrooms, bathrooms, sqft_living, sqft_lot, floors, waterfront,
+           view, condition, grade, yr_built, zipcode, lat, long
+    FROM house_sales
+    WHERE date >= '2014-07-01' AND date < '2014-08-01'
+      AND price IS NOT NULL
+      AND bedrooms IS NOT NULL
+      AND bathrooms IS NOT NULL
+      AND sqft_living IS NOT NULL
+      AND zipcode IS NOT NULL;
+    ```
 
-```python name=preprocess_king_county.py
-import pandas as pd
+    Example Python script:
+    ```python
+    import pandas as pd
 
-# Load the cleaned CSV from SQL query
-df = pd.read_csv("king_county_clean.csv")
+    df = pd.read_excel("HouseData.xlsx")
+    df['date'] = pd.to_datetime(df['date'])
+    for col in ['sqft_lot', 'view', 'condition', 'grade']:
+        if df[col].isnull().sum() > 0:
+            df[col].fillna(df[col].median(), inplace=True)
+    df['price_per_sqft'] = df['price'] / df['sqft_living']
+    df = df[df['price'] < 2000000]
+    df.to_csv("king_county_preprocessed.csv", index=False)
+    ```
 
-# Convert date to datetime
-df['date'] = pd.to_datetime(df['date'])
+3. **Tableau Visualization**
+    - Import the cleaned data into Tableau.
+    - Build interactive visuals:
+        - Daily average house sales price
+        - Map of sales by region
+        - Distribution of house prices, bedrooms, bathrooms
+        - View vs condition heatmap
+        - Filters for month, year built, sqft living, and lot size
 
-# Handle missing values for features (fill with median or drop)
-for col in ['sqft_lot', 'view', 'condition', 'grade']:
-    if df[col].isnull().sum() > 0:
-        df[col].fillna(df[col].median(), inplace=True)
-
-# Feature engineering: add price per sqft
-df['price_per_sqft'] = df['price'] / df['sqft_living']
-
-# Remove extreme outliers in price
-df = df[df['price'] < 2000000]
-
-# Save for Tableau
-df.to_csv("king_county_preprocessed.csv", index=False)
-```
-
----
-
-## Tableau Dashboard
-
-- **Filters:** Month, year built, sqft living, sqft lot
-- **Visuals:** Daily average sales price, map of sales, price distribution, view vs condition heatmap, bathroom and bedroom distribution
-- **Link:** [King County House Sales Tableau Dashboard](https://public.tableau.com/app/profile/neelam.s.jat/viz/KingCountyHouseSales_17581165566070/KingCountyHouseSales)
+4. **Review & Usage**
+    - Refer to the screenshot (`King County House Sales.png`) for a quick overview.
+    - Open the Tableau workbook (`KingCountyHouseSales_Dashboard.twbx`) for full interactivity.
 
 ---
 
-## Usage
+## 💡 Business Questions & Answers
 
-1. Run the SQL script to extract and clean raw data.
-2. Use the Python script for further preprocessing and feature engineering.
-3. Import the processed CSV into Tableau.
-4. Explore the dashboard and answer business questions.
+**1. What is the daily average house sale price in King County for July 2014?**
+   - The daily average price fluctuates around $500,000, showing a stable market during the month.
 
----
+**2. How are house prices distributed?**
+   - Most houses are sold in the $200,000–$700,000 range, with fewer sales above $1 million.
 
-## License
+**3. Which areas see the most house sales?**
+   - The Seattle metropolitan region shows higher sales activity, as seen on the map.
 
-**License: MIT License**
+**4. What are the most common property features?**
+   - Most homes have 3–4 bedrooms and 2–3 bathrooms; living area typically ranges from 1,000–3,000 sqft.
 
-This project is open source under the MIT License. You are free to use, modify, and distribute it, provided that the original source and contributors are credited.
+**5. How do condition and view impact sales?**
+   - Houses with "No View" and average conditions are most common. "Good" or "Excellent" views are rare and likely command higher prices.
 
-```
-MIT License
-
-Copyright (c) 2025 Neelam-jat
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-...
-```
+**6. Are there seasonal or daily trends?**
+   - No drastic daily price changes in July 2014, indicating consistent buyer activity.
 
 ---
 
-## Contact
+## 📝 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## ✨ Getting Started
+
+1. Clone the repository and review `HouseData.xlsx` for source data.
+2. Use provided SQL and Python scripts for cleaning and preprocessing.
+3. Open `KingCountyHouseSales_Dashboard.twbx` in Tableau Desktop or Tableau Public.
+4. Explore the dashboard and refer to the PNG screenshot or the online Tableau link for a preview.
+
+---
+
+## 📬 Contact
 
 For feedback, contributions, or questions, please reach out via [GitHub Issues](https://github.com/Neelam-jat/) or connect on Tableau Public.
